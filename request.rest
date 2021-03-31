@@ -1,0 +1,5 @@
+GET  http://localhost:8501/v1/models/CNN_MNIST
+
+###
+
+POST http://localhost:8501/v1/models/CNN_MNIST:predict
