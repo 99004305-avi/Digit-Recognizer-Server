@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== 'production') {
+	require('dotenv').config();
+}
+
 const express = require('express');
 const cors = require('cors');
 const app = express();
@@ -5,6 +9,7 @@ const app = express();
 const protocol = process.env.PROTOCOL || 'http';
 const host = process.env.HOST || 'localhost';
 const port = process.env.PORT || 3000;
+const origin = process.env.ORIGIN || 'https://digit-recognizer-ai.netlify.app';
 
 // Logger
 app.use((req, res, next) => {
@@ -12,11 +17,14 @@ app.use((req, res, next) => {
 	next();
 });
 //Cors Enable
-app.use(cors());
+app.use(
+	cors({
+		origin: origin,
+		optionsSuccessStatus: 200, // For legacy browser support
+	})
+);
 // Body Parser
 app.use(express.json());
-// Static File serve
-app.use(express.static('public'));
 // Routes
 app.post('/predict', require('./predict'));
 
